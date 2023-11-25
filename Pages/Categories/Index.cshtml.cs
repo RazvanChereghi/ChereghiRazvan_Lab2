@@ -18,14 +18,32 @@ namespace ChereghiRazvan_Lab2.Pages.Categories
         {
             _context = context;
         }
+        public IList<Category> Category { get; set; } = new List<Category>();
+        public List<Book> BooksInCategory { get; set; }
+        public int CategoryID { get; set; }
 
-        public IList<Category> Category { get;set; } = default!;
-
-        public async Task OnGetAsync()
+        public async Task OnGetAsync(int? id)
         {
-            if (_context.Category != null)
+            Category = await _context.Category
+                .Include(c => c.BookCategories)
+                .ThenInclude(bc => bc.Book)
+                .ThenInclude(b => b.Author)
+                .AsNoTracking()
+                .ToListAsync();
+
+            if (id != null)
             {
-                Category = await _context.Category.ToListAsync();
+                CategoryID = id.Value;
+                Category selectedCategory = Category
+                    .Where(c => c.ID == id.Value)
+                    .SingleOrDefault();
+
+                if (selectedCategory != null)
+                {
+                    BooksInCategory = selectedCategory.BookCategories
+                        .Select(bc => bc.Book)
+                        .ToList();
+                }
             }
         }
     }
