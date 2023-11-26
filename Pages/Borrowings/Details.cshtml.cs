@@ -29,6 +29,8 @@ namespace ChereghiRazvan_Lab2.Pages.Borrowings
             }
 
             var borrowing = await _context.Borrowing
+                .Include(b => b.Book)
+                .Include(b => b.Member)
                 .FirstOrDefaultAsync(m => m.ID == id);
             if (borrowing == null)
             {
