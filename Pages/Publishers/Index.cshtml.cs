@@ -8,9 +8,11 @@ using Microsoft.EntityFrameworkCore;
 using ChereghiRazvan_Lab2.Data;
 using ChereghiRazvan_Lab2.Models;
 using ChereghiRazvan_Lab2.Models.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 
 namespace ChereghiRazvan_Lab2.Pages.Publishers
 {
+    [Authorize(Roles = "Admin")]
     public class IndexModel : PageModel
     {
         private readonly ChereghiRazvan_Lab2.Data.ChereghiRazvan_Lab2Context _context;

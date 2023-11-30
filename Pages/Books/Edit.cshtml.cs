@@ -8,9 +8,11 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using ChereghiRazvan_Lab2.Data;
 using ChereghiRazvan_Lab2.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace ChereghiRazvan_Lab2.Pages.Books
 {
+    [Authorize(Roles = "Admin")]
     public class EditModel : BookCategoriesPageModel
     {
         private readonly ChereghiRazvan_Lab2.Data.ChereghiRazvan_Lab2Context _context;
